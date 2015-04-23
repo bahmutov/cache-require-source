@@ -1,0 +1,30 @@
+{
+  "name": "cache-require-source",
+  "version": "0.1.0",
+  "description": "Caches loaded source in module require to speed up next app load",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bahmutov/cache-require-source.git"
+  },
+  "keywords": [
+    "npm",
+    "node",
+    "application",
+    "load",
+    "startup",
+    "performance",
+    "speed",
+    "cache",
+    "resolution"
+  ],
+  "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bahmutov/cache-require-source/issues"
+  },
+  "homepage": "https://github.com/bahmutov/cache-require-source"
+}
