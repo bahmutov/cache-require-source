@@ -5,27 +5,32 @@ var exists = fs.existsSync;
 
 var _compile = Module.prototype._compile;
 
+var t = process.hrtime();
 var nameCache = exists(SAVE_FILENAME) ? JSON.parse(fs.readFileSync(SAVE_FILENAME, 'utf-8')) : {};
+t = process.hrtime(t);
+var nanoToMs = 1e-6;
+console.log('loading source cache took', Math.round(t[1] * nanoToMs));
+
+var cacheChanges = false;
+
+function getCachedOrRead(filename) {
+  var source = nameCache[filename];
+
+  if (!source) {
+    source = fs.readFileSync(filename, 'utf-8');
+    nameCache[filename] = source;
+    cacheChanges = true;
+  }
+  return source;
+}
 
 Module._extensions['.js'] = function (module, filename) {
-  var source = nameCache[filename] ? nameCache[filename] :
-    fs.readFileSync(filename, 'utf-8');
-  nameCache[filename] = source;
-
-  // console.log('filename', filename);
-  // console.log('source');
-  // console.log(source);
+  var source = getCachedOrRead(filename);
   return module._compile(source, filename);
 };
 
 Module._extensions['.json'] = function (module, filename) {
-  var source = nameCache[filename] ? nameCache[filename] :
-    fs.readFileSync(filename, 'utf-8');
-  nameCache[filename] = source;
-
-  // console.log('filename', filename);
-  // console.log('source');
-  // console.log(source);
+  var source = getCachedOrRead(filename);
   return module._compile('module.exports = ' + source, filename);
 };
 
