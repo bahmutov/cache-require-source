@@ -1,0 +1,9 @@
+{
+  "name": "cache-require-source-test",
+  "version": "0.1.0",
+  "description": "test a couple of requires load",
+  "main": "index.js",
+  "devDependencies": {
+    "express": "4.12.3"
+  }
+}
