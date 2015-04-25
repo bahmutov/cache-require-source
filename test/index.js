@@ -1,22 +1,14 @@
-var useCache = process.argv.some(function (str) {
-  return str === '--cache';
+var agent = require('webkit-devtools-agent');
+agent.start({
+  port: 9999,
+  bind_to: '0.0.0.0',
+  ipc_port: 3333,
+  verbose: true
 });
-if (useCache) {
-  require('..');
-}
 
-function time(fn) {
-  var t = process.hrtime();
-  var result = fn();
-  t = process.hrtime(t);
-  var nanoToMs = 1e-6;
-  console.log('benchmark took %d seconds and %d milliseconds',
-    t[0], Math.round(t[1] * nanoToMs));
-}
+process.on('SIGUSR2', function () {
+  console.log('SIGUSR2', 'starting loading');
 
-function load() {
-  var exp = require('express');
-}
+  require('./code');
 
-time(load);
-
+});

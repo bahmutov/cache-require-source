@@ -5,23 +5,22 @@ var exists = fs.existsSync;
 
 var _compile = Module.prototype._compile;
 
-var t = process.hrtime();
+// var t = process.hrtime();
 var nameCache = exists(SAVE_FILENAME) ? JSON.parse(fs.readFileSync(SAVE_FILENAME, 'utf-8')) : {};
-t = process.hrtime(t);
-var nanoToMs = 1e-6;
-console.log('loading source cache took', Math.round(t[1] * nanoToMs));
+// t = process.hrtime(t);
+// var nanoToMs = 1e-6;
+// console.log('loading source cache took', Math.round(t[1] * nanoToMs));
 
 var cacheChanges = false;
 
 function getCachedOrRead(filename) {
-  var source = nameCache[filename];
-
-  if (!source) {
-    source = fs.readFileSync(filename, 'utf-8');
-    nameCache[filename] = source;
+  if (!nameCache[filename]) {
+    nameCache[filename] = {
+      src: fs.readFileSync(filename, 'utf-8')
+    };
     cacheChanges = true;
   }
-  return source;
+  return nameCache[filename].src;
 }
 
 Module._extensions['.js'] = function (module, filename) {

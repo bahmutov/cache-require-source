@@ -4,6 +4,11 @@
   "description": "test a couple of requires load",
   "main": "index.js",
   "devDependencies": {
-    "express": "4.12.3"
+    "cache-require-paths": "0.1.0",
+    "express": "4.12.3",
+    "webkit-devtools-agent": "0.3.1"
+  },
+  "dependencies": {
+    "chrome-remote-interface": "0.6.1"
   }
 }
